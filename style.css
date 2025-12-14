@@ -1,0 +1,218 @@
+body { 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+    height: 100vh; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    display: flex; 
+    height: 100vh; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    position: relative; /* 為了讓絕對定位的按鈕相對 body 定位 */
+}
+#sidebar { 
+    width: 300px; 
+    padding: 15px; 
+    overflow-y: auto; 
+    background-color: #f8f9fa; 
+    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-out; /* 增加過渡效果 */
+    z-index: 1000; /* 確保側邊欄浮在地圖上方 */
+}
+#map { 
+    flex-grow: 1; 
+    min-height: 100%;
+}
+#trackListTitle {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+.controls {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.controls button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.2s;
+}
+.controls button:hover {
+    background-color: #e9ecef;
+}
+
+/* 全域設定區塊 */
+.global-settings {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+.global-settings h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+.setting-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+.setting-group label {
+    font-weight: 500;
+}
+.setting-group select,
+.global-settings button {
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    flex-basis: 55%; /* 控制寬度 */
+}
+
+/* GPX 路線列表樣式 */
+#gpxTrackList {
+    flex-grow: 1;
+}
+.gpx-track-item {
+    display: flex;
+    flex-wrap: wrap; /* 讓內容自動換行 */
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.2s;
+}
+.gpx-track-item:hover {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.track-main {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.track-name-display {
+    flex-grow: 1;
+    margin-left: 5px;
+    font-weight: bold;
+    border-bottom: 1px dashed transparent; 
+    cursor: text;
+    padding: 0 2px;
+}
+.track-name-display:focus {
+    border-bottom-color: #007bff;
+    outline: none;
+}
+.track-info-actions {
+    display: flex;
+    align-items: center;
+    width: 100%; /* 新增操作區塊 */
+    justify-content: space-between;
+    padding-top: 5px;
+    border-top: 1px dotted #eee;
+}
+.track-info-actions span {
+    font-size: 0.9em;
+    color: #666;
+}
+.track-actions button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.delete-gpx-track {
+    background: #dc3545 !important; 
+}
+.gpx-track-item.active {
+    background-color: #f0f8ff; 
+    border-left: 5px solid; 
+}
+
+/* 手機模式專用按鈕樣式 */
+.mobile-only {
+    display: none; /* 預設在桌面版隱藏 */
+}
+#openSidebarBtn, #closeSidebarBtn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* -------------------------------------- */
+/* 響應式佈局：螢幕寬度小於 768px (手機/平板直立) */
+/* -------------------------------------- */
+@media (max-width: 768px) {
+    body {
+        /* 取消 flex 佈局，讓地圖佔滿整個視窗 */
+        display: block;
+        overflow: hidden; /* 防止滾動條出現 */
+    }
+    #sidebar {
+        /* 將側邊欄設為全高固定定位，覆蓋整個左側 */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 85%; /* 佔手機螢幕 85% 寬度 */
+        height: 100%;
+        padding: 15px;
+        transform: translateX(-100%); /* 預設收合在左側 */
+        box-shadow: 5px 0 10px rgba(0,0,0,0.5);
+    }
+    /* 側邊欄開啟時的狀態 */
+    .sidebar-open #sidebar {
+        transform: translateX(0);
+    }
+    #map {
+        /* 地圖佔滿整個視窗 */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    /* 顯示手機模式專用按鈕 */
+    .mobile-only {
+        display: block; 
+    }
+    #openSidebarBtn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 500; /* 浮在地圖上方 */
+    }
+    #closeSidebarBtn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: auto;
+        margin: 0;
+        background-color: #dc3545; /* 紅色關閉按鈕 */
+    }
+}
