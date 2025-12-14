@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多軌跡 GPX 檢視器</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="sidebar">
+        <button id="closeSidebarBtn" class="mobile-only">⬅️ 關閉設定</button>
+        <div class="controls">
+            <input type="file" id="gpxUpload" accept=".gpx" multiple style="display: none;">
+            
+            <button id="selectGpxBtn">📂 上傳 GPX 檔案</button>
+            <button id="exportConsolidatedDataBtn" disabled>💾 匯出所有軌跡數據 (CSV)</button>
+            <button id="clearDataBtn">❌ 清除所有軌跡</button>
+        </div>
+
+        <div class="global-settings">
+            <h4>⚙️ 軌跡全域設定</h4>
+            <div class="setting-group">
+                <label for="markerModeSelect">標記點模式：</label>
+                <select id="markerModeSelect">
+                    <option value="none">不標記</option>
+                    <option value="distance">每公里標記</option>
+                    <option value="hourly">每小時標記</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label for="colorModeToggle">路線顏色：</label>
+                <button id="colorModeToggle" data-mode="unique">路線獨立</button>
+            </div>
+        </div>
+
+        <h3 id="trackListTitle">🗺️ 載入的 GPX 路線</h3>
+        <div id="gpxTrackList"></div>
+    </div>
+    <div id="map"></div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    
+    <script src="script.js"></script> 
+</body>
+</html>
